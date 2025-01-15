@@ -16,3 +16,13 @@ npm install
 * 프로젝트 실행
 프로젝트 폴더로 꼭 이동한 이후에 실행!
 npm start
+
+* reactjs code snippet 설치
+* Material Icon Theme 설치
+* Ctrl + Shift + p settings.json 검색
+    "emmet.syntaxProfiles": {
+        "javascript": "jsx" 
+    },
+    "emmet.includeLanguages": {
+        "javascript": "html"
+    }
