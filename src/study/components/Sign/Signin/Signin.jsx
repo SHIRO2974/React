@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 
-function Signin(userList) {
+function Signin({userList}) {
 
     //  로그인 정보를 입력한 값
     const [loginValue, setLoginValue] = useState({

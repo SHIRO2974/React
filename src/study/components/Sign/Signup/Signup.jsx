@@ -25,7 +25,8 @@ function Signup({userList, setUserList}) {
 
         //      만든 User을 List에 추가한다
                 setUserList([
-                    ...userList, inputValue
+                    ...userList, 
+                    inputValue
                 ]);
         
                 alert("가입완료")

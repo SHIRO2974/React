@@ -1,9 +1,10 @@
 
 import React, { useState } from 'react';
-import Signin from './components/Signin/Signin';
-import Signup from './components/Signup/Signup';
+import Signin from './components/Sign/Signin/Signin';
+import Signup from './components/Sign/Signup/Signup';
 
 function App6(props) {
+
 
     const [ path, setPath] = useState("signin");
     const [userList, setUserList] = useState([]);
