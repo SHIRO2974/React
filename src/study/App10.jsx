@@ -32,11 +32,19 @@ function App10(props) {
         
     }, [num1, num2]);
 
+    useEffect(() => {
+
+        console.log("마운트!");
+    })
+
     const handleOnClick = () => {
 
         setNum1(num1 + 10);
     }
     
+    console.log("??????");  
+    
+
     return (
         <div>
             <h1>Num1: {num1}</h1>
