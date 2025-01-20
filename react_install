@@ -26,3 +26,5 @@ npm start
     "emmet.includeLanguages": {
         "javascript": "html"
     }
+* compact Folders 설정 해제
+* styled 설치

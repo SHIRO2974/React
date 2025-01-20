@@ -12,4 +12,6 @@ function Hello() {
     </>
 }
 
+// import 를 할려면 export를 무조건 해줘야하며
+// 컴포넌트는 default를 사용한다
 export default Hello;

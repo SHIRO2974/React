@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 function App4(props) {
 
-    const [ userInfo, setUserInfo] = useState({
+    const [ userInfo, setUserInfo] = useState({ // 사용자에게 입력받을 이름과 성별을 저장할 객체
 
         name: "",
         gender: "",

@@ -21,9 +21,9 @@ function App3(props) {
         
     }
     
-    const handleOKOnclick = () => {
-        setName(nameInputValue);
-        setnameInputValue("");
+    const handleOKOnclick = () => { // 클릭 이벤트가 발생 시
+        setName(nameInputValue);    // nameInputValue에 사용자가 입력한 이름이 들어간다
+        setnameInputValue("");      // 그리고 초기화
         setGender(genderInputValue === "male" ? "남" : "여");
     }
 
