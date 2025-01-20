@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./style.css";
 import BookSearchItems from '../BookSearchItems/BookSearchItems';
 
-function BookSearch({ bookList }) { // bookList를 참조해 찾고자하는 데이터를 
+function BookSearch({ bookList}) { // bookList를 참조해 찾고자하는 데이터를 
     const [ bookTableList, setBookTableList ] = useState([]);
 
     return (

@@ -7,7 +7,8 @@ function Route({ path, element }) {
     return (
         <>
             {
-                window.location.pathname === path && element
+                // pathname과 path 가 동일해야만 element 실행
+                window.location.pathname === path && element    
             }
         </>
     );

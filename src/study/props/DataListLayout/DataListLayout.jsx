@@ -2,12 +2,27 @@ function DataListLayout({children}) {   // {children}: 부모 컴포넌트에서
 
     console.log(children);
 
-    const liList = [
+    const liList = [    
         <li>5번 리스트</li>,
         <li>6번 리스트</li>,
         <li>7번 리스트</li>,
         <li>8번 리스트</li>,
     ];
+    const liList2 = [    
+        <li>5번 리스트</li>,
+        <li>6번 리스트</li>,
+        <li>7번 리스트</li>,
+        <li>8번 리스트</li>,
+    ];
+
+    const liList3 = [    
+        <li>5번 리스트</li>,
+        <li>6번 리스트</li>,
+        <li>7번 리스트</li>,
+        <li>8번 리스트</li>,
+    ];
+
+    
 
     return <ul>
         {children}

@@ -1,6 +1,7 @@
 /**@jsxImportSource @emotion/react */
+import axios from 'axios';
 import * as s from './style';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 
 function WritePage(props) {
@@ -29,6 +30,7 @@ function WritePage(props) {
     useEffect(() => {
         const head = document.querySelector("head");    // querySelector 로 head, link 를 받는다
         const link = document.createElement("link");
+
         link.rel = "stylesheet";
         link.href = "https://unpkg.com/react-quill@1.3.3/dist/quill.snow.css";
         head.appendChild(link);
@@ -40,6 +42,8 @@ function WritePage(props) {
                 <button>작성하기</button>
             </div>
             <ReactQuill 
+
+                value={content}
                 modules={{
                     toolbar: toolbarOptions,
                 }}

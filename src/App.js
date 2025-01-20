@@ -14,7 +14,7 @@ function App() {
     
     <MainLayout>
       <Routes>
-          <Route path= "/" element= { <IndexPage /> } /> 
+          <Route path= "/" element= { <IndexPage /> } />
           <Route path= "/write" element= { <WritePage /> }/>
       </Routes>
     </MainLayout>

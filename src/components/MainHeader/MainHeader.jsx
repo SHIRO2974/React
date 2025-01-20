@@ -14,7 +14,7 @@ function MainHeader(props) {
             <div css = {s.leftContainer}>
                 <Link to={"/"}><h1>미니 게시판 프로젝트</h1></Link>  
                 <ul>
-                    <Link to={"/list"}>
+                    <Link to={"/list"}> 
                         <li>
                             <LuLayoutList /> 게시글 목록
                         </li>
