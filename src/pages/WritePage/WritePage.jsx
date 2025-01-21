@@ -41,11 +41,20 @@ function WritePage(props) {
             <div css={s.headerlayout}>
                 <button>작성하기</button>
             </div>
+            <div css={s.titleLayout}>
+                <input type="text"  placeholder='여기에 제목을 입력하세요.'/>
+
+            </div>
             <ReactQuill 
 
-                value={content}
                 modules={{
                     toolbar: toolbarOptions,
+                }}
+                style={{
+                    boxSizing: 'border-box',
+                    width: "100%",
+                    height: "600px",
+
                 }}
             />
         </div>
