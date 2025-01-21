@@ -36,17 +36,60 @@ function WritePage(props) {
         head.appendChild(link);
     }, []);
 
+    const [ inputValue, setInputValue ] = useState({
+
+        title: "",
+        content: "",
+    })
+
+    const handleInputOnChange = (e) => {
+
+        setInputValue({
+            
+            ...inputValue,
+            [e.target.name]: e.target.value,
+        });
+    }
+
+    const handleQuillOnChange = (value) => {
+
+        setInputValue({
+
+            ...inputValue,
+            content: value,
+        });
+    }
+
+    const handleriteSubmitOnClick = () => {
+
+        console.log(inputValue);
+        
+    }
+
+    const headleWriteSubmitOnClick = async () => {
+
+        try {
+
+            const response = await axios.post("http://localhost:8080/servlet_study_war/api/board", inputValue);
+
+        } catch (error) {
+            
+        }
+    }
+
+
     return (
         <div>
             <div css={s.headerlayout}>
-                <button>작성하기</button>
+                <button onClick={headleWriteSubmitOnClick}>작성하기</button>
             </div>
             <div css={s.titleLayout}>
-                <input type="text"  placeholder='여기에 제목을 입력하세요.'/>
-
+                <input type="text"  
+                placeholder='여기에 제목을 입력하세요.' 
+                name='title' value={inputValue.title} onChange={handleInputOnChange}/>
             </div>
-            <ReactQuill 
 
+            <ReactQuill 
                 modules={{
                     toolbar: toolbarOptions,
                 }}
@@ -54,8 +97,8 @@ function WritePage(props) {
                     boxSizing: 'border-box',
                     width: "100%",
                     height: "600px",
-
                 }}
+                value={inputValue.content} onChange={handleQuillOnChange}
             />
         </div>
     );

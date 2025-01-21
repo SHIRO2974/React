@@ -40,7 +40,7 @@ function App11(props) {
             resolve();
 
         } else {
-
+                
             reject();
         }
     });

@@ -52,7 +52,7 @@ function App13(props) {
         });
     }
 
-    const generateToken2 = async (user) => {
+    const generateToken2 = async (user) => {    
 
         if (!user) {
             
