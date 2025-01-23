@@ -13,7 +13,6 @@ import { useQuery } from 'react-query';
 
 function App() {
 
-  const [userId, setUserId] = useRecoilState(authUserIdState);
   const location = useLocation();
 
   const authenticatedUser = async () => {
@@ -33,23 +32,13 @@ function App() {
     authenticatedUser, 
     {
 
-      onSuccess: (response) => {
-
-        console.log(response);
-      },
-
-      onError: (error) => {
-        
-        console.error(error);
-        setUserId(0); 
-      },
-
       // enabled 가 true 가 되야 요청을 보낸다 AccessToken 없다면 실행 X
+      refetchOnWindowFocus: false,
       enabled: !!localStorage.getItem("AccessToken"), 
     }
   );  
 
-
+  console.log(authenticatedUserQuery.isLoading);
 
   return (
     
@@ -57,15 +46,22 @@ function App() {
 
     <Global styles = {global}/>
     
-    <MainLayout>
-      <Routes>
-          <Route path= "/" element= { <IndexPage /> } />
-          <Route path= "/write" element= { <WritePage /> }/>
-          <Route path='/list' element={ <ListPage /> } />
-          <Route path='/signup' element={ <SignupPage /> } />
-          <Route path='/signin' element={ <SigninPage /> } />
-      </Routes>
-    </MainLayout>
+    {
+      authenticatedUserQuery.isLoading  // 로그인 데이터 존재여부 확인
+      ? 
+      <></> //true
+      :
+        // false
+      <MainLayout>
+        <Routes>
+            <Route path= "/" element= { <IndexPage /> } />
+            <Route path= "/write" element= { <WritePage /> }/>
+            <Route path='/list' element={ <ListPage /> } />
+            <Route path='/signup' element={ <SignupPage /> } />
+            <Route path='/signin' element={ <SigninPage /> } />
+        </Routes>
+      </MainLayout>
+     }
     </>
   );
 }

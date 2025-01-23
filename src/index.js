@@ -15,7 +15,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();  // 서버와 통신을 주고받는 상태를 관리
 
 //  RecoilRoot: 지역안에서의 전역 상태를 만든다 atom 에서 상태를 관리
-//  QueryClientProvider: 
 root.render(
     <RecoilRoot>    
         <QueryClientProvider client={queryClient}>

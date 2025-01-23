@@ -2,21 +2,20 @@
 import { Link } from 'react-router-dom';
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
-import { LuUserPlus, LuLogIn, LuLogOut, LuUser, LuLayoutList, LuNotebookPen } from "react-icons/lu";
+import { LuUserRoundPlus, LuLogIn, LuLogOut, LuUser, LuLayoutList, LuNotebookPen } from "react-icons/lu";
 import axios from 'axios';
+import { useQuery, useQueryClient } from 'react-query';
 
 
 function MainHeader(props) {
 
-    const [ userId, setUserId ] = useRecoilState(authUserIdState);
+    const queryClient = useQueryClient();
+    const userId = queryClient.getQueryData(["authenticatedUserQuery"])?.data.body; // authenticatedUserQuery 쿼리 키 데이터를 가져온다
     
-
-    useEffect(() => {
-
         const getUserAPI = async (userId) => {
 
-            try {
-                const response = await axios.get("http://localhost:8080/servlet_study_war/api/user", {
+            
+                return await axios.get("http://localhost:8080/servlet_study_war/api/user", {
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("AccessToken"),
                     },
@@ -24,21 +23,18 @@ function MainHeader(props) {
                         "userId": userId,
                     }
                 });
-                console.log(response);
-            } catch (error) {
-                
+        }
+
+        const getUserQuery = useQuery(
+
+            ["getUserQuery", userId],   // userId 로그인 키값 확인
+            getUserAPI,
+            {
+
+                refetchOnWindowFocus: false,
+                enabled: !!userId,   // userId가 있을 때만 쿼리를 실행하도록 설정
             }
-        }
-
-    }, [userId]);   // 로그인 또는 로그아웃 상태
-
-    useEffect(() => {   
-
-        if (!!userId) { // user가 0이 아닐때만
-            
-            getUserAPI(userId);
-        }
-    },[userId]) 
+        );
 
     return (
         //  a태그는 강제적으로 페이지를 이동하기 때문에 Link태그를 사용한다
@@ -67,9 +63,7 @@ function MainHeader(props) {
                     !!userId ?
                     <ul>
                     <Link to={"/mypage"}>
-                        <li>
-                            <LuUser />사용자이름
-                        </li>
+                        <li><LuUser /> {getUserQuery.isLoading ? "" : getUserQuery.data.data.username}</li>
                     </Link>
                     <Link to={"/logout"}>
                         <li>
@@ -86,7 +80,7 @@ function MainHeader(props) {
                     </Link>
                     <Link to={"/signup"}>
                         <li>
-                            <LuUserRoundPlus />회원가입
+                            <LuUserRoundPlus  />회원가입
                         </li>
                     </Link>
                 </ul>
