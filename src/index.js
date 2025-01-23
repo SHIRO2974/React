@@ -6,15 +6,24 @@ import RouterDom from './components/RouterDom/RouterDom';
 import Route from './components/RouterDom/Route';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const queryClient = new QueryClient();  // 서버와 통신을 주고받는 상태를 관리
 
+//  RecoilRoot: 지역안에서의 전역 상태를 만든다 atom 에서 상태를 관리
+//  QueryClientProvider: 
 root.render(
-    <BrowserRouter>
-            <App />
-    </BrowserRouter>
+    <RecoilRoot>    
+        <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+                    <App />
+            </BrowserRouter>
+        </QueryClientProvider>
+    </RecoilRoot>
 );
 
 //root.render(<App />);
