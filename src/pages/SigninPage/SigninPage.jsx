@@ -3,6 +3,9 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import * as s from './style';
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { accessTokenAtomState } from '../../atom/authUserIdAtomState';
+import { QueryClient } from 'react-query';
 
 function SigninPage(props) {
 
@@ -10,6 +13,7 @@ function SigninPage(props) {
 
     const [ searchParams ] = useSearchParams();
 
+    const [ accessToken, setAccessToken ] = useRecoilState(accessTokenAtomState);
     const [ inputRefs ] = useState([ useRef(), useRef()]);
     const [ buttonRefs ] = useState([ useRef() ]);
     const [ inputValue, setInputValue ] = useState({
@@ -51,12 +55,12 @@ function SigninPage(props) {
     }
 
     const handleSigninSubmitOnClick = async () => {
+        
         try {
             const response = await axios.post("http://localhost:8080/servlet_study_war/api/signin", inputValue);
-            console.log(response);
             localStorage.setItem("AccessToken", response.data.body);
+            setAccessToken(localStorage.getItem("AccessToken"));
             navigate("/")   // 로그인 하고난 후 홈 이동
-
             
         } catch (error) {
             console.error(error);

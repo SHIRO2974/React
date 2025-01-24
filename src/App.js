@@ -10,10 +10,12 @@ import SigninPage from './pages/SigninPage/SigninPage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useQuery } from 'react-query';
+import { useRecoilCallback, useRecoilState } from 'recoil';
+import { accessTokenAtomState} from './atom/authUserIdAtomState';
 
 function App() {
 
-  const location = useLocation();
+  const [ accessToken, setAccessToken ] = useRecoilState(accessTokenAtomState);
 
   const authenticatedUser = async () => {
     
@@ -28,17 +30,16 @@ function App() {
 
   const authenticatedUserQuery = useQuery(  // useQuery 는 호출된 순간 useEffect 처럼 사용된다
 
-    ["authenticatedUserQuery"], 
-    authenticatedUser, 
+    ["authenticatedUserQuery"], // 키 값 
+    authenticatedUser,  // 실행될 함수
     {
 
-      // enabled 가 true 가 되야 요청을 보낸다 AccessToken 없다면 실행 X
+      retry: 0, // 로그아웃되면 재실행 하지 않는다
+      // enabled 가 true 가 되야 요청을 보낸다 AccessToken 없다면 실행 X 
       refetchOnWindowFocus: false,
-      enabled: !!localStorage.getItem("AccessToken"), 
+      enabled: !!accessToken, 
     }
   );  
-
-  console.log(authenticatedUserQuery.isLoading);
 
   return (
     

@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { LuUserRoundPlus, LuLogIn, LuLogOut, LuUser, LuLayoutList, LuNotebookPen } from "react-icons/lu";
 import axios from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
+import { useSetRecoilState } from 'recoil';
+import { accessTokenAtomState } from '../../atom/authUserIdAtomState';
 
 
 function MainHeader(props) {
@@ -12,8 +14,9 @@ function MainHeader(props) {
     const navigate = useNavigate
     const queryClient = useQueryClient(); // 전역 상태를 관리할 수 있다
     const userId = queryClient.getQueryData(["authenticatedUserQuery"])?.data.body; // authenticatedUserQuery 쿼리 키 데이터를 가져온다 data.body: access respons
+    const setAcessToken = useSetRecoilState(accessTokenAtomState);
     
-        const getUserAPI = async (userId) => {
+        const getUserApi = async () => {
 
                 return await axios.get("http://localhost:8080/servlet_study_war/api/user", {
                     headers: {
@@ -28,7 +31,7 @@ function MainHeader(props) {
         const getUserQuery = useQuery(
 
             ["getUserQuery", userId],   // userId 로그인 키값 확인
-            getUserAPI,
+            getUserApi,
             {
 
                 refetchOnWindowFocus: false,
@@ -39,7 +42,7 @@ function MainHeader(props) {
         const handleLogoutOnClick = () => {
 
             localStorage.removeItem("AccessToken")
-            queryClient.invalidateQueries(["authenticatedUserQuery"]);    // 캐쉬를 지운다
+            setAcessToken(localStorage.setItem("AccessToken"));
             navigate("/signin");
         }
 
