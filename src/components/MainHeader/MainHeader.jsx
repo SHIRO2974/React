@@ -1,5 +1,5 @@
 /**@jsxImportSource @emotion/react */
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as s from './style';
 import React, { useEffect, useState } from 'react';
 import { LuUserRoundPlus, LuLogIn, LuLogOut, LuUser, LuLayoutList, LuNotebookPen } from "react-icons/lu";
@@ -9,12 +9,12 @@ import { useQuery, useQueryClient } from 'react-query';
 
 function MainHeader(props) {
 
-    const queryClient = useQueryClient();
-    const userId = queryClient.getQueryData(["authenticatedUserQuery"])?.data.body; // authenticatedUserQuery 쿼리 키 데이터를 가져온다
+    const navigate = useNavigate
+    const queryClient = useQueryClient(); // 전역 상태를 관리할 수 있다
+    const userId = queryClient.getQueryData(["authenticatedUserQuery"])?.data.body; // authenticatedUserQuery 쿼리 키 데이터를 가져온다 data.body: access respons
     
         const getUserAPI = async (userId) => {
 
-            
                 return await axios.get("http://localhost:8080/servlet_study_war/api/user", {
                     headers: {
                         "Authorization": "Bearer " + localStorage.getItem("AccessToken"),
@@ -35,6 +35,13 @@ function MainHeader(props) {
                 enabled: !!userId,   // userId가 있을 때만 쿼리를 실행하도록 설정
             }
         );
+
+        const handleLogoutOnClick = () => {
+
+            localStorage.removeItem("AccessToken")
+            queryClient.invalidateQueries(["authenticatedUserQuery"]);    // 캐쉬를 지운다
+            navigate("/signin");
+        }
 
     return (
         //  a태그는 강제적으로 페이지를 이동하기 때문에 Link태그를 사용한다
@@ -63,25 +70,21 @@ function MainHeader(props) {
                     !!userId ?
                     <ul>
                     <Link to={"/mypage"}>
-                        <li><LuUser /> {getUserQuery.isLoading ? "" : getUserQuery.data.data.username}</li>
+                        <li><LuUser /> {getUserQuery.isLoading ? "" : getUserQuery.data.data.body.username}</li>
                     </Link>
-                    <Link to={"/logout"}>
+                    <a href='javascript: void(0)' onClick={handleLogoutOnClick}>
                         <li>
                             <LuLogOut />로그아웃
                         </li>
-                    </Link>
+                    </a>
                 </ul>
                 :
                 <ul>
                     <Link to={"/signin"}>
-                        <li>
-                            <LuLogIn />로그인
-                        </li>
+                        <li><LuLogIn />로그인</li>
                     </Link>
                     <Link to={"/signup"}>
-                        <li>
-                            <LuUserRoundPlus  />회원가입
-                        </li>
+                        <li><LuUserRoundPlus />회원가입</li>
                     </Link>
                 </ul>
                 }
