@@ -17,6 +17,10 @@ function App() {
 
   const [ accessToken, setAccessToken ] = useRecoilState(accessTokenAtomState);
 
+  useEffect(() => {
+    authenticatedUserQuery.refetch();
+  }, [accessToken]);
+
   const authenticatedUser = async () => {
     
     return await axios.get("http://localhost:8080/servlet_study_war/api/authenticated", {

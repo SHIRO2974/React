@@ -78,6 +78,7 @@ function SigninPage(props) {
                     onChange={handleInputOnChange} 
                     onKeyDown={handleInputOnKeyDown} 
                     ref={ inputRefs[0] } />
+                    
                 <input type="password" 
                     placeholder='비밀번호' 
                     name='password' 

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { LuUserRoundPlus, LuLogIn, LuLogOut, LuUser, LuLayoutList, LuNotebookPen } from "react-icons/lu";
 import axios from 'axios';
 import { useQuery, useQueryClient } from 'react-query';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { accessTokenAtomState } from '../../atom/authUserIdAtomState';
 
 
@@ -14,6 +14,10 @@ function MainHeader(props) {
     const navigate = useNavigate
     const queryClient = useQueryClient(); // 전역 상태를 관리할 수 있다
     const userId = queryClient.getQueryData(["authenticatedUserQuery"])?.data.body; // authenticatedUserQuery 쿼리 키 데이터를 가져온다 data.body: access respons
+    const [ accessToken, setAccessToken ] = useRecoilState(accessTokenAtomState);
+    console.log(userId);
+    
+    
     const setAcessToken = useSetRecoilState(accessTokenAtomState);
     
         const getUserApi = async () => {
@@ -28,12 +32,13 @@ function MainHeader(props) {
                 });
         }
 
-        const getUserQuery = useQuery(
+        const getUserQuery = useQuery(  
 
-            ["getUserQuery", userId],   // userId 로그인 키값 확인
+            ["getUserQuery"],   // userId 로그인 키값 확인
             getUserApi,
-            {
 
+            {
+                retry: 0,
                 refetchOnWindowFocus: false,
                 enabled: !!userId,   // userId가 있을 때만 쿼리를 실행하도록 설정
             }
